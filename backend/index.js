@@ -11,8 +11,9 @@ const app = express();
 
 const port = process.env.PORT || 4000;
 connectDB();
+const allowedOrigins = ["https://attendence-frontend-eight.vercel.app","https://attendence-admin.vercel.app"];
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 app.use("/api/auth", authRouter);
 app.use('/api/employee',employeeRouter)
