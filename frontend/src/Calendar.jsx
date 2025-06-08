@@ -59,13 +59,10 @@ export default function CalendarWithHolidays({ employeeId , cl}) {
           const map = {};
 
           data.forEach((entry) => {
-            // Parse date string, add 1 day, then format again
+            // ✅ Just use the original date
             const originalDate = new Date(entry.date);
-            const adjustedDate = new Date(originalDate);
-            adjustedDate.setDate(adjustedDate.getDate() + 1);
-            const adjustedDateStr = adjustedDate.toISOString().slice(0, 10);
-
-            map[adjustedDateStr] = entry.status;
+            const dateStr = originalDate.toISOString().slice(0, 10);
+            map[dateStr] = entry.status;
           });
 
           setAttendanceMap(map);
@@ -81,6 +78,7 @@ export default function CalendarWithHolidays({ employeeId , cl}) {
 
     fetchAttendance();
   }, [selectedMonth, employeeId]);
+  
   
 
   // Calculate summary stats for selected month
