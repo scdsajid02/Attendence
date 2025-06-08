@@ -10,7 +10,7 @@ import attendanceRoute from "./routes/AttendenceRoute.js";
 const app = express();
 
 const port = process.env.PORT || 4000;
-connectDB();
+
 const allowedOrigins = ["https://attendence-frontend-eight.vercel.app","https://attendence-admin.vercel.app"];
 app.use(express.json());
 app.use(cors({ origin: allowedOrigins, credentials: true }));
@@ -24,4 +24,11 @@ app.get("/", (req, res) => {
   res.send("API  WORKING");
 });
 
-app.listen(port, () => console.log("server started on port :" + port));
+connectDB()
+  .then(() => {
+    app.listen(port, () => console.log("🚀 Server started on port:", port));
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB connection failed:", err);
+    process.exit(1);
+  });
